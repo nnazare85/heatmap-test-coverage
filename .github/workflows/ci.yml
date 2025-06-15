@@ -1,0 +1,39 @@
+name: Heatmap Coverage CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start Coverage Server (Background)
+        run: |
+          npm run start-overlay &
+
+      - name: Start Web App (Background)
+        run: |
+          npm run start-server &
+
+      - name: Run Playwright Tests
+        run: npm test
+
+      - name: Upload Coverage JSON
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: coverage.json
