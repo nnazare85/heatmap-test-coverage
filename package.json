@@ -1,0 +1,16 @@
+{
+  "name": "heatmap-test-coverage",
+  "version": "1.0.0",
+  "scripts": {
+    "start-server": "http-server public -p 3000",
+    "start-overlay": "node server/coverage-server.js",
+    "test": "playwright test"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.45.0"
+  }
+}
